@@ -15,10 +15,10 @@ from urllib.request import Request, urlopen
 import streamlit as st
 
 
-# 1. Settings ---------------------------------------------------------------
+
 
 API_URL = "https://api.mymemory.translated.net/get"
-MAX_CHARACTERS = 120  # At most 480 UTF-8 bytes, below the API's 500-byte limit.
+MAX_CHARACTERS = 120  
 LANGUAGES = {
     "English": "en", "Hindi": "hi", "Bengali": "bn", "Tamil": "ta",
     "Telugu": "te", "Marathi": "mr", "Gujarati": "gu", "Urdu": "ur",
@@ -32,7 +32,7 @@ EXAMPLES = (
 )
 
 
-# 2. Translation API --------------------------------------------------------
+
 
 class TranslationError(Exception):
     """An input or service problem that can be displayed to the user."""
@@ -71,8 +71,7 @@ def parse_response(payload: dict, original_text: str) -> str:
     translated = data.get("translatedText")
     best_score = similarity(data.get("match"))
 
-    # Prefer a stronger exact-source translation-memory match when provided.
-    # Some responses put a lower-scoring entry in responseData.
+ 
     matches = payload.get("matches", [])
     if isinstance(matches, list):
         for candidate in matches:
@@ -124,7 +123,7 @@ def translate_text(text: str, source: str, target: str) -> str:
     return parse_response(payload, text)
 
 
-# 3. Session controls -------------------------------------------------------
+
 
 def initialize_state() -> None:
     defaults = {"input_text": "", "source_language": "English",
@@ -173,7 +172,7 @@ def run_translation() -> None:
     st.session_state.history = [result] + st.session_state.history[:4]
 
 
-# 4. Interface --------------------------------------------------------------
+
 
 STYLES = """
 <style>
